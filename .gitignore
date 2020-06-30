@@ -1,0 +1,27 @@
+hprof_analysis/
+*/**/*.iml
+*.iml
+.local.properties
+.idea/
+.DS_Store
+/build
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# Intellij project files
+*.ipr
+*.iws
+
+*.apk
+*.ap_
+local.properties
+/releaseApk
+.project
+.classpath
+.settings
+.fir_change_logs
+*.ws.kts
+*/**/ProcessCache/

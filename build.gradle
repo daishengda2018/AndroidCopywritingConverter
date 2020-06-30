@@ -1,0 +1,45 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.jetbrains.kotlin.jvm' version '1.3.61'
+    id 'io.gitlab.arturbosch.detekt' version '1.1.0'
+}
+
+group 'com.mrcd'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+mainClassName = 'com.mrcd.Converter'
+
+repositories {
+    jcenter()
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.mrcd.Converter'
+    }
+    from {
+        configurations.compileClasspath.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation group: 'org.jdom', name: 'jdom', version: '2.0.2'
+    compile group: 'org.dom4j', name: 'dom4j', version: '2.1.0'
+    implementation group: 'net.sourceforge.jexcelapi', name: 'jxl', version: '2.6.12'
+    testCompile group: 'junit', name: 'junit', version: '4.13'
+    detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:1.10.0"
+}
+
+apply from: "config/detekt/detekt.gradle"

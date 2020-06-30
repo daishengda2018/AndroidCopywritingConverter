@@ -1,0 +1,19 @@
+// kotlin Code Style
+// https://github.com/detekt/detekt
+// https://detekt.github.io/detekt/index.html
+// https://www.cnblogs.com/mengdd/p/kotlin-android-lint-tools-ktlint-detekt.html
+
+detekt {
+    failFast = true     // fail build on any finding
+    config = files("config/detekt/detekt.yml") // 规则配置文件
+    buildUponDefaultConfig = true
+
+    reports {
+        html.enabled = true // observe findings in your browser with structure and code snippets
+        xml.enabled = false // checkstyle like format mainly for integrations like Jenkins
+        txt.enabled = true  // similar to the console output, contains issue signature to manually edit baseline files
+    }
+}
+
+// Groovy dsl
+tasks.detekt.jvmTarget = "1.8"

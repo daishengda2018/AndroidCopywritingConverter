@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+#
+# 方案一： https://arturbosch.github.io/detekt/git-pre-commit-hook.html
+# 将该文件放到project根目录的.git/hooks/目录下，执行 chmod +x pre-commit 为脚本添加可执行权限即可，
+# 之后的每次commit都会先执行 checkstyle task 进行代码检查
+#
+# 方案二： https://stackoverflow.com/questions/427207/can-git-hook-scripts-be-managed-along-with-the-repository
+# 从git 2.9开始, 可以设置:core.hooksPath了.
+# 可以在repo里面添加一个目录hooks, 然后把git hooks文件放进去track.
+# 在命令行跑:
+# git config core.hooksPath [文件路径]
+# 把找hook文件的目录设置成指定目录就好了.
+
+echo "执行 kotlin 代码规范检查..."
+./gradlew detekt
+EXIT_CODE=$?
+if [ $EXIT_CODE -ne 0 ]; then
+  echo "***********************************************"
+  echo "                 Detekt failed                 "
+  echo " Please fix the above issues before committing "
+  echo "***********************************************"
+  exit $EXIT_CODE
+fi
+
+#echo "执行 checkstyle 任务 "
+#./gradlew checkstyle
