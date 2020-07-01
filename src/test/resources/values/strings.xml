@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<resources>
-    <string name="chat_room_guarder">Room M&apos;reVP</string>
-    <string name="become_guarder_desc">You will have the chance to be the Room MVP, when your contribution in this room is over &lt;%s today.&gt;</string>
-    <string name="become_guarder">Come and get the &amp; honor!</string>
-    <string name="chat_guarder_need_coin">Contribute %s more coins, you can take over the &#064;current Room MVP!</string>
-    <string name="is_mine_guarder_desc">Congratulations! You&apos;re the Room MVP!</string>
-</resources>

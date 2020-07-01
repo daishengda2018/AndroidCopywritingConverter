@@ -16,7 +16,6 @@ import java.io.FileWriter
  *
  * 安卓国际化多语文案自动转 string.xml 程序。一键增加、修改文案
  *
- *
  * Create by im_dsd 2020/6/30 13:35
  */
 internal class Converter(private val excelPath: String, private val outPutPath: String) {

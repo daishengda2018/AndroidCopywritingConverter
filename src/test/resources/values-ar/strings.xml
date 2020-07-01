@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
-<resources>
-    <string name="chat_room_guarder">داعم الغرفة</string>
-    <string name="become_guarder_desc">اليوم يمكنك الحصول على لقب داعم الغرفة في حالة المساهمة بعدد أكبر من %sعملة في هذه الغرفة.</string>
-    <string name="become_guarder">هيا قم بالمساهمة لتحصل على اللقب!</string>
-    <string name="chat_guarder_need_coin">ساهم بارسال المزيد من العملات %s ،للاستحواذ على لقب داعم الغرفة !</string>
-    <string name="is_mine_guarder_desc">تهانينا! لقد أصبت داعم الغرفة الأكبر.</string>
-</resources>
