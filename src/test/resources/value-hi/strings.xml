@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<resources>
+  <string name="chat_room_guarder">रुम एमवीपी</string>
+  <string name="become_guarder_desc">आपके पास रूम एमवीपी होने का मौका होगा, जब आज इस कमरे में आपका योगदान %s से अधिक है।</string>
+  <string name="become_guarder">आओ और सम्मान पाओ!</string>
+  <string name="chat_guarder_need_coin">%s से अधिक सिक्कों का योगदान दें, आप अपने वर्तमान रुम को एमवीपी बना सकते हैं !</string>
+  <string name="is_mine_guarder_desc">बधाई हो! तुम्हारा रुम एमवीपी है !</string>
+</resources>

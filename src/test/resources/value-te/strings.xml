@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<resources>
+  <string name="chat_room_guarder">రూమ్ MVP</string>
+  <string name="become_guarder_desc">మీరు ఈ రూమ్ లో ఈరోజు %s కన్నా ఎక్కువ పంపితే ఈ రూమ్ కి MVP మీరే కావొచ్చు</string>
+  <string name="become_guarder">వచ్చి గౌరవం పొందండి!</string>
+  <string name="chat_guarder_need_coin">%s కాయిన్స్ పంపడం ద్వారా ప్రస్తుతం ఉన్న MVP ని మీరు అధిగమించవచ్చు</string>
+  <string name="is_mine_guarder_desc">అభినందనలు! మీరు రూమ్ MVP !</string>
+</resources>

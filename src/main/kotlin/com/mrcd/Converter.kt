@@ -10,6 +10,7 @@ import org.dom4j.bean.BeanElement
 import org.dom4j.io.OutputFormat
 import org.dom4j.io.SAXReader
 import org.dom4j.io.XMLWriter
+import org.dom4j.tree.DefaultElement
 import java.io.File
 import java.io.FileWriter
 
@@ -39,23 +40,23 @@ internal class Converter(private val excelPath: String, private val outPutPath: 
             }
         }
 
-        println("-------转换完成 ------\n")
+        println("\n-------转换完成 ------")
     }
 
-    private fun convertColumn(sheet: Sheet, column: Int): Document {
+    private fun convertColumn(sheet: Sheet, column: Int){
         val langCode = sheet.getCell(column, 0).contents
+        if (langCode.isEmpty()) {
+            return
+        }
         val xmlFile = loadXmlFile(langCode)
         val xmlElementMap = parserXml(xmlFile)
         val excelElementMap = parserExcel(sheet, column)
         val document = createXmlDocument(excelElementMap, xmlElementMap)
         output(document, xmlFile)
-        return document
     }
 
-    private fun createXmlDocument(
-        excelElementMap: LinkedHashMap<String, String>,
-        xmlElementMap: LinkedHashMap<String, Element>
-    ): Document {
+    private fun createXmlDocument(excelElementMap: LinkedHashMap<String, String>,
+                                  xmlElementMap: LinkedHashMap<String, Element>): Document {
         val document = DocumentHelper.createDocument()
         val root = DocumentHelper.createElement("resources")
         document.rootElement = root
@@ -64,7 +65,8 @@ internal class Converter(private val excelPath: String, private val outPutPath: 
             if (xmlElementMap.containsKey(key)) {
                 xmlElementMap[key]?.text = value
             } else {
-                val newElement = BeanElement(QName(value))
+                val newElement = DefaultElement(QName("string"))
+                newElement.addAttribute("name", key)
                 newElement.text = value
                 xmlElementMap[key] = newElement
             }
@@ -87,15 +89,19 @@ internal class Converter(private val excelPath: String, private val outPutPath: 
     }
 
     private fun parserXml(xmlFile: File): LinkedHashMap<String, Element> {
-        val document = SAXReader().read(xmlFile)
         val map = LinkedHashMap<String, Element>()
-        document.rootElement.elementIterator()
-            .forEachRemaining { element -> map[element.name] = element }
+        try {
+            val document = SAXReader().read(xmlFile)
+            document.rootElement.elementIterator("string")
+                .forEachRemaining { element -> map[element.attribute("name").value] = element }
+        } catch (ignore: Exception) {
+
+        }
         return map
     }
 
     private fun loadXmlFile(langCode: String): File {
-        val dirPath = outPutPath + "value${buildDirName(langCode)}"
+        val dirPath = outPutPath + "/value${buildDirName(langCode)}"
         val dirFile = File(dirPath)
         if (!dirFile.exists()) {
             dirFile.mkdirs()

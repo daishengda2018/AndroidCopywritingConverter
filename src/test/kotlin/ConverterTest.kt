@@ -26,9 +26,9 @@ class ConverterTest {
         MainKt.main(array)
     }
 
-    //@Test(expected = NoSuchFileException::class)
+    @Test(expected = NoSuchFileException::class)
     fun test() {
-        val array = arrayOf("./src/test/resources/copy_writer.xlsx", "src/test/resources")
+        val array = arrayOf("./src/test/resources/copy_writer.xls", "src/test/resources")
         MainKt.main(array)
     }
 }
