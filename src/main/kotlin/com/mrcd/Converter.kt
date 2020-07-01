@@ -61,7 +61,6 @@ internal class Converter(private val excelPath: String, private val outPutPath: 
         excelElementMap: LinkedHashMap<String, String>,
         xmlElementMap: LinkedHashMap<String, Element>
     ): ArrayList<Element> {
-
         // 替换老文案
         xmlElementMap.keys.forEach() { key ->
             if (excelElementMap.containsKey(key)) {
@@ -99,7 +98,7 @@ internal class Converter(private val excelPath: String, private val outPutPath: 
             if (key == null || key.isEmpty() || value == null || value.isEmpty()) {
                 continue
             }
-            excelElementMap[key.trim()] = value.trim()
+            excelElementMap[key.trim()] = value.trim().replace("'", "\\'")
         }
         return excelElementMap
     }
@@ -115,7 +114,7 @@ internal class Converter(private val excelPath: String, private val outPutPath: 
     }
 
     private fun loadXmlFile(langCode: String): File {
-        val dirPath = outPutPath + "/value${buildDirName(langCode)}"
+        val dirPath = outPutPath + "/values${buildDirName(langCode)}"
         val dirFile = File(dirPath)
         if (!dirFile.exists()) {
             dirFile.mkdirs()
@@ -134,8 +133,11 @@ internal class Converter(private val excelPath: String, private val outPutPath: 
 
     private fun output(doc: Document, outputFile: File) {
         val format = OutputFormat.createPrettyPrint()
+        format.setIndentSize(4)
+        format.isPadText = false
         format.encoding = doc.xmlEncoding
         val writer = XMLWriter(FileWriter(outputFile), format)
+        writer.isEscapeText = false
         writer.write(doc)
         writer.flush()
         writer.close()

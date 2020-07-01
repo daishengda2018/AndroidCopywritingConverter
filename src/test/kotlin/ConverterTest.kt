@@ -1,5 +1,7 @@
 import com.mrcd.MainKt
+import org.apache.commons.text.StringEscapeUtils
 import org.junit.Test
+import java.io.File
 
 /**
  *
@@ -26,9 +28,26 @@ class ConverterTest {
         MainKt.main(array)
     }
 
-    @Test(expected = NoSuchFileException::class)
+    @Test
     fun test() {
         val array = arrayOf("./src/test/resources/copy_writer.xls", "src/test/resources")
         MainKt.main(array)
+    }
+
+    @Test
+    fun absoluteTest() {
+        val array = arrayOf(
+            "./src/test/resources/copy_writer.xls",
+            "/Users/im_dsd/Documents/work_room/WeShare-Android/chatroom/src/main/res"
+        )
+        MainKt.main(array)
+    }
+
+    @Test
+    fun testStringEscapeUtils() {
+        val file = File("src/test/resources/text")
+        println(file.readLines()[0])
+        println(StringEscapeUtils.unescapeXml("@him/her"))
+        println(StringEscapeUtils.unescapeHtml4("&#064;"))
     }
 }
