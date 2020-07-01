@@ -49,5 +49,10 @@ class ConverterTest {
         println(file.readLines()[0])
         println(StringEscapeUtils.unescapeXml("@him/her"))
         println(StringEscapeUtils.unescapeHtml4("&#064;"))
+
+        //handling xml special character & in Java String
+        val xmlWithSpecial = "Java & HTML @ < >"; //xml String with & as special characters
+        println("Original unescaped XML String: " + xmlWithSpecial);
+        println("Escaped XML String in Java: " + StringEscapeUtils.escapeXml11(xmlWithSpecial));
     }
 }

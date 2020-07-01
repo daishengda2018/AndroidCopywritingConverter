@@ -2,6 +2,7 @@ package com.mrcd
 
 import jxl.Sheet
 import jxl.Workbook
+import org.apache.commons.text.StringEscapeUtils
 import org.dom4j.*
 import org.dom4j.io.OutputFormat
 import org.dom4j.io.SAXReader
@@ -67,6 +68,7 @@ internal class Converter(private val excelPath: String, private val outPutPath: 
                 xmlElementMap[key]?.text = excelElementMap[key]
                 excelElementMap.remove(key)
             }
+            xmlElementMap[key]?.text = escapeContent(xmlElementMap[key]?.text)
         }
 
         // 添加新文案
@@ -74,11 +76,16 @@ internal class Converter(private val excelPath: String, private val outPutPath: 
         excelElementMap.forEach { (key, value) ->
             val newElement = DefaultElement(QName("string"))
             newElement.addAttribute("name", key)
-            newElement.text = value
+            newElement.text = escapeContent(value)
             resultList.add(newElement)
         }
 
         return resultList
+    }
+
+    private fun escapeContent(text: String?): String {
+        val replace = text?.trimEnd()?.replace("\\'", "'")
+        return StringEscapeUtils.escapeXml11(replace)?.replace("@", "&#064;") ?: ""
     }
 
     private fun readXmlFile(xmlFile: File): Document {
@@ -98,7 +105,7 @@ internal class Converter(private val excelPath: String, private val outPutPath: 
             if (key == null || key.isEmpty() || value == null || value.isEmpty()) {
                 continue
             }
-            excelElementMap[key.trim()] = value.trim().replace("'", "\\'")
+            excelElementMap[key.trim()] = value.trim()
         }
         return excelElementMap
     }
