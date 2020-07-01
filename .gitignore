@@ -16,13 +16,6 @@ hprof_analysis/
 *.ipr
 *.iws
 
-*.apk
-*.ap_
-local.properties
-/releaseApk
 .project
 .classpath
 .settings
-.fir_change_logs
-*.ws.kts
-*/**/ProcessCache/
