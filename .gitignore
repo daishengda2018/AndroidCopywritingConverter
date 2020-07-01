@@ -1,7 +1,6 @@
 hprof_analysis/
 */**/*.iml
 *.iml
-.gradle
 .local.properties
 .idea/
 .DS_Store
@@ -19,3 +18,4 @@ hprof_analysis/
 .project
 .classpath
 .settings
+/.gradle/
