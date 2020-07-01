@@ -134,16 +134,22 @@ internal class Converter(private val excelPath: String, private val outPutPath: 
         return file
     }
 
+    /**
+     * 一些特殊的名字
+     */
     private fun buildDirName(langCode: String): String {
         return if (langCode == "en") "" else "-${if (langCode == "id") "in" else langCode}"
     }
 
     private fun output(doc: Document, outputFile: File) {
         val format = OutputFormat.createPrettyPrint()
+        // 开头缩进
         format.setIndentSize(4)
+        // 禁止行尾留空行
         format.isPadText = false
         format.encoding = doc.xmlEncoding
         val writer = XMLWriter(FileWriter(outputFile), format)
+        // 禁止解析特殊标签，会通过 parserExcel 方法解析
         writer.isEscapeText = false
         writer.write(doc)
         writer.flush()
@@ -166,6 +172,9 @@ internal class Converter(private val excelPath: String, private val outPutPath: 
          */
         private const val FIRST_ROW = LANGUAGE_TITLE_ROW + 1
 
+        /**
+         * sheet 数量
+         */
         private const val SHEET_COUNT = 1;
     }
 }
