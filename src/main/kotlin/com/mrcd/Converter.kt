@@ -2,14 +2,12 @@ package com.mrcd
 
 import jxl.Sheet
 import jxl.Workbook
-import org.dom4j.Document
-import org.dom4j.DocumentHelper
-import org.dom4j.Element
-import org.dom4j.QName
+import org.dom4j.*
 import org.dom4j.io.OutputFormat
 import org.dom4j.io.SAXReader
 import org.dom4j.io.XMLWriter
 import org.dom4j.tree.DefaultElement
+import org.xml.sax.SAXParseException
 import java.io.File
 import java.io.FileWriter
 
@@ -87,8 +85,8 @@ internal class Converter(private val excelPath: String, private val outPutPath: 
     private fun readXmlFile(xmlFile: File): Document {
         try {
             return SAXReader().read(xmlFile)
-        } catch (e: Exception) {
-            e.printStackTrace()
+        } catch (ignore: SAXParseException) {
+        } catch (ignore: DocumentException) {
         }
         return DocumentHelper.createDocument()
     }
@@ -109,7 +107,7 @@ internal class Converter(private val excelPath: String, private val outPutPath: 
     private fun parserXmlDoc(doc: Document): LinkedHashMap<String, Element> {
         val map = LinkedHashMap<String, Element>()
         doc.rootElement
-            ?.elementIterator("string")
+            ?.elementIterator()
             ?.forEachRemaining { element ->
                 map[element.attribute("name").value] = element
             }
