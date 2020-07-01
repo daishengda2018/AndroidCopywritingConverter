@@ -29,7 +29,7 @@ class ConverterTest {
     }
 
     @Test
-    fun test() {
+    fun testLocal() {
         val array = arrayOf("./src/test/resources/copy_writer.xls", "src/test/resources")
         MainKt.main(array)
     }

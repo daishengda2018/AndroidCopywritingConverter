@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<resources>
+    <string name="chat_room_guarder">MVP Ruangan</string>
+    <string name="become_guarder_desc">Kamu akan ada kesempatan untuk menjadi MVP Ruangan, ketika kontribusi anda didalam ruangan lebih dari %s hari ini.</string>
+    <string name="become_guarder">Datang dan dapatkan penghargaan!</string>
+    <string name="chat_guarder_need_coin">Kontribusikan %s koin lagi, kamu akan menggantikan MVP Ruangan yang sekarang!</string>
+    <string name="is_mine_guarder_desc">Selamat, Anda menjadi MVP Ruangan!</string>
+</resources>
