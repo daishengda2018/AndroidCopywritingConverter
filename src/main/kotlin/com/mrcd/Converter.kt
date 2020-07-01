@@ -6,7 +6,6 @@ import org.dom4j.Document
 import org.dom4j.DocumentHelper
 import org.dom4j.Element
 import org.dom4j.QName
-import org.dom4j.bean.BeanElement
 import org.dom4j.io.OutputFormat
 import org.dom4j.io.SAXReader
 import org.dom4j.io.XMLWriter
@@ -49,30 +48,49 @@ internal class Converter(private val excelPath: String, private val outPutPath: 
             return
         }
         val xmlFile = loadXmlFile(langCode)
-        val xmlElementMap = parserXml(xmlFile)
-        val excelElementMap = parserExcel(sheet, column)
-        val document = createXmlDocument(excelElementMap, xmlElementMap)
-        output(document, xmlFile)
+        val xmlDoc = readXmlFile(xmlFile)
+        val rootElement = xmlDoc.rootElement ?: DocumentHelper.createElement("resources")
+        merge(parserExcel(sheet, column), parserXmlDoc(xmlDoc)).forEach { e -> rootElement.add(e) }
+        xmlDoc.rootElement = rootElement
+        xmlDoc.xmlEncoding = "UTF-8"
+        output(xmlDoc, xmlFile)
     }
 
-    private fun createXmlDocument(excelElementMap: LinkedHashMap<String, String>,
-                                  xmlElementMap: LinkedHashMap<String, Element>): Document {
-        val document = DocumentHelper.createDocument()
-        val root = DocumentHelper.createElement("resources")
-        document.rootElement = root
-        document.xmlEncoding = "UTF-8"
-        excelElementMap.forEach { (key, value) ->
-            if (xmlElementMap.containsKey(key)) {
-                xmlElementMap[key]?.text = value
-            } else {
-                val newElement = DefaultElement(QName("string"))
-                newElement.addAttribute("name", key)
-                newElement.text = value
-                xmlElementMap[key] = newElement
+    /**
+     * 合并文案
+     */
+    private fun merge(
+        excelElementMap: LinkedHashMap<String, String>,
+        xmlElementMap: LinkedHashMap<String, Element>
+    ): ArrayList<Element> {
+
+        // 替换老文案
+        xmlElementMap.keys.forEach() { key ->
+            if (excelElementMap.containsKey(key)) {
+                xmlElementMap[key]?.text = excelElementMap[key]
+                excelElementMap.remove(key)
             }
-            root.add(xmlElementMap[key])
         }
-        return document
+
+        // 添加新文案
+        val resultList = ArrayList<Element>(excelElementMap.size)
+        excelElementMap.forEach { (key, value) ->
+            val newElement = DefaultElement(QName("string"))
+            newElement.addAttribute("name", key)
+            newElement.text = value
+            resultList.add(newElement)
+        }
+
+        return resultList
+    }
+
+    private fun readXmlFile(xmlFile: File): Document {
+        try {
+            return SAXReader().read(xmlFile)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return DocumentHelper.createDocument()
     }
 
     private fun parserExcel(sheet: Sheet, column: Int): LinkedHashMap<String, String> {
@@ -88,15 +106,13 @@ internal class Converter(private val excelPath: String, private val outPutPath: 
         return excelElementMap
     }
 
-    private fun parserXml(xmlFile: File): LinkedHashMap<String, Element> {
+    private fun parserXmlDoc(doc: Document): LinkedHashMap<String, Element> {
         val map = LinkedHashMap<String, Element>()
-        try {
-            val document = SAXReader().read(xmlFile)
-            document.rootElement.elementIterator("string")
-                .forEachRemaining { element -> map[element.attribute("name").value] = element }
-        } catch (ignore: Exception) {
-
-        }
+        doc.rootElement
+            ?.elementIterator("string")
+            ?.forEachRemaining { element ->
+                map[element.attribute("name").value] = element
+            }
         return map
     }
 
