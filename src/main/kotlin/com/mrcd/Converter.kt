@@ -12,12 +12,11 @@ import org.xml.sax.SAXParseException
 import java.io.File
 import java.io.FileWriter
 
-
 /**
- * 将原始xml读取到 LinedHashMap 中，将 excel 放到 HashMap 中，遍历 LinedHashMap 打印原始结果，如果 HashMap 有相同的 key
- * 打印 HashMap 中的 value 并 remove，最后打印 HashMap 剩余的值
  *
- * todo 特殊字符的转换
+ * 安卓国际化多语文案自动转 string.xml 程序。一键增加、修改文案
+ *
+ *
  * Create by im_dsd 2020/6/30 13:35
  */
 internal class Converter(private val excelPath: String, private val outPutPath: String) {
@@ -76,16 +75,23 @@ internal class Converter(private val excelPath: String, private val outPutPath: 
         excelElementMap.forEach { (key, value) ->
             val newElement = DefaultElement(QName("string"))
             newElement.addAttribute("name", key)
-            newElement.text = escapeContent(value)
+            newElement.text = escapeContent(value.trim())
             resultList.add(newElement)
         }
 
         return resultList
     }
 
+    /**
+     * 转译特殊字符
+     */
     private fun escapeContent(text: String?): String {
+        // 1. 先过去尾部空格, 开头的空格有的是估计留下，所有不能统一处理
         val replace = text?.trimEnd()?.replace("\\'", "'")
-        return StringEscapeUtils.escapeXml11(replace)?.replace("@", "&#064;") ?: ""
+        // 2. 转译
+        val escapeXml = StringEscapeUtils.escapeXml11(replace)
+        // 3. @ 特殊自动转移，手动处理
+        return escapeXml?.replace("@", "&#064;") ?: ""
     }
 
     private fun readXmlFile(xmlFile: File): Document {
