@@ -22,7 +22,7 @@ detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:[version]"
 
 > 文件夹内有 checkStyle 的配置，按需拷贝，但 checkStyle 需要特殊配置，本文不描述
 
-![image-20200702174009759](images/关于关于 Kotlin 静态代码检测工具 detekt /image-20200702174009759.png)
+![image-20200702174009759](images/关于 Kotlin 静态代码检测工具 detekt 的说明/image-20200702174009759.png)
 
 注意，**detekt.yml** 的文件路径必须是 config/detekt/detekt.yml 否则配置文件不生效
 
@@ -146,13 +146,13 @@ git config core.hooksPath ./config
 
 提交代码时将会触发 hook ，开始检测代码，如果有不良代码提交将被中断，按提示修正代码方可提交
 
-![image-20200702180842511](images/关于关于 Kotlin 静态代码检测工具 detekt /image-20200702180842511.png)
+![image-20200702180842511](images/关于 Kotlin 静态代码检测工具 detekt 的说明/image-20200702180842511.png)
 
 
 
 错误提示
 
-![image-20200702183943746](images/关于关于 Kotlin 静态代码检测工具 detekt /image-20200702183943746.png)
+![image-20200702183943746](images/关于 Kotlin 静态代码检测工具 detekt 的说明/image-20200702183943746.png)
 
 
 
@@ -164,7 +164,7 @@ git config core.hooksPath ./config
 
 
 
-![image-20200702184320604](images/关于关于 Kotlin 静态代码检测工具 detekt /image-20200702184320604.png)
+![image-20200702184320604](images/关于 Kotlin 静态代码检测工具 detekt 的说明/image-20200702184320604.png)
 
 
 
@@ -180,7 +180,7 @@ detekt.yml 是检测的规则集合，可以通过修改此配置文件指定规
 
 位于 config/detekt/detekt.yml 的配置文件已经设置了常用规则，直接使用就可以。每个规则的具体说明请参见：[规则说明](https://detekt.github.io/detekt/comments.html)
 
-![image-20200702181338680](images/关于关于 Kotlin 静态代码检测工具 detekt /image-20200702181338680.png)
+![image-20200702181338680](images/关于 Kotlin 静态代码检测工具 detekt 的说明/image-20200702181338680.png)
 
 
 
@@ -208,7 +208,7 @@ tasks.detekt.jvmTarget = "1.8"
 
 如果开启了 html 输出结果在模块的 build 文件夹下
 
-![image-20200702181850461](images/关于关于 Kotlin 静态代码检测工具 detekt /image-20200702181850461.png)
+![image-20200702181850461](images/关于 Kotlin 静态代码检测工具 detekt 的说明/image-20200702181850461.png)
 
 
 
