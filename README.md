@@ -1,4 +1,4 @@
-# <img width="85" height="80" src="images/README/icon-convert-6.png"/>安卓多语言文案转换器
+# <img width="50" height="45" src="images/README/icon-convert-6.png"/>安卓多语言文案转换器
 
 1. 一键转换多语言文案，支持添加、修改功能。无需手动复制、整理格式。
 2. 不更改历史文案的结构（礼物注释，文案顺序），仅移除末尾空格、将使用“\” 转译的特殊符号更改为 html 标签。
