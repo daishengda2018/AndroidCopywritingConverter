@@ -13,4 +13,4 @@ if  [ ! -n "$xmlPathth" ] ;then
     exit
 fi
 
-java -jar CopywritingConverter-1.0.jar "$1", "$2"
+java -jar CopywritingConverter-1.0.jar excelPath, xmlPathth
