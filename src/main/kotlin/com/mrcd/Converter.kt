@@ -86,11 +86,20 @@ internal class Converter(private val excelPath: String, private val outPutPath: 
      */
     private fun escapeContent(text: String?): String {
         // 1. 先过去尾部空格, 开头的空格有的是估计留下，所有不能统一处理
-        val replace = text?.trimEnd()?.replace("\\'", "'")
-        // 2. 转译
-        val escapeXml = StringEscapeUtils.escapeXml11(replace)
-        // 3. @ 特殊自动转移，手动处理
-        return escapeXml?.replace("@", "&#064;") ?: ""
+        var replace = text?.trimEnd() ?: ""
+        // 2. 替换单引号，防止 StringEscapeUtils 修改老的文案
+        replace = replace.replace("\\'", "'")
+        // 3. 替换 @，，防止 StringEscapeUtils 修改老的文案
+        replace = replace.replace("\\@", "@")
+        // 4. 转译
+        replace = StringEscapeUtils.escapeXml11(replace)
+        // 5. 替换单引号编码为反斜杠转译，因为 Android 不识别 &apos;
+        replace = replace.replace("&apos;", "\\'")
+        // 6. 替换被 StringEscapeUtils 转移的双引号，因为 Android 不识别
+        replace = replace.replace("&quot;", "\"")
+        // 7. StringEscapeUtils 不处理 @ 需手动处理
+        replace = replace.replace("@", "&#064;")
+        return replace
     }
 
     private fun readXmlFile(xmlFile: File): Document {
@@ -120,7 +129,7 @@ internal class Converter(private val excelPath: String, private val outPutPath: 
         doc.rootElement
             ?.elementIterator()
             ?.forEachRemaining { element ->
-                map[element.attribute("name").value] = element
+                map[element.attribute("name").value.trim()] = element
             }
         return map
     }
@@ -147,12 +156,13 @@ internal class Converter(private val excelPath: String, private val outPutPath: 
     }
 
     private fun output(doc: Document, outputFile: File) {
-        val format = OutputFormat.createPrettyPrint()
+        val format = OutputFormat()
         // 开头缩进
         format.setIndentSize(4)
-        // 禁止行尾留空行
-        format.isPadText = false
+        format.isNewlines = true
+        format.isTrimText = true
         format.encoding = doc.xmlEncoding
+
         val writer = XMLWriter(FileWriter(outputFile), format)
         // 禁止解析特殊标签，会通过 parserExcel 方法解析
         writer.isEscapeText = false
