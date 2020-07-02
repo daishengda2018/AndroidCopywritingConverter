@@ -1,8 +1,4 @@
-[toc]
-
-
-
-# Introduction
+# 介绍
 
 [detekt](https://github.com/detekt/detekt) 是一款 kotlin 代码静态检测工具，他对标的是 Java 静态检测工具 checkStyle。detekt 有着检测快、功能强、可配置高等特点，可以帮助开发者尽早的发现代码中的坏气味。
 
@@ -10,7 +6,7 @@
 
 除了 [detekt](https://github.com/detekt/detekt)  还有一种成熟的方案：[ktlint](https://ktlint.github.io/)。 **但 ktlint 的会按照内置规则修改代码**，这是不可容忍的。
 
-虽然 detekt 配置起来复杂一些，但是更加灵活，可以保障团队的代码风格一致，并提前发现不良代码。另外，detekt 的规则是 ktlint 的超集可以通过配置添加
+虽然 detekt 配置起来复杂一些，但是更加灵活，可以保障团队的代码风格一致，并提前发现不良代码。另外，detekt 的规则是 ktlint 的超集可以通过一下配置添加
 
 ```groovy
 detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:[version]"
@@ -18,11 +14,11 @@ detektPlugins "io.gitlab.arturbosch.detekt:detekt-formatting:[version]"
 
 
 
-# Quick Start
+# 开始
 
 ## 添加资源
 
-**在项目更目录创建 config 文件夹[拷贝地址内部的内容](https://github.com/daishengda2018/AndroidCopywritingConverter/tree/master/config)**
+**在项目根目录创建 config 文件夹并[拷贝目标地址的内容](https://github.com/daishengda2018/AndroidCopywritingConverter/tree/master/config)**
 
 > 文件夹内有 checkStyle 的配置，按需拷贝，但 checkStyle 需要特殊配置，本文不描述
 
@@ -71,7 +67,7 @@ plugins {
 
 
 
-上述步骤完毕后添加 detekt 设置文件
+上述步骤完毕后在 project build.gradle **末尾**添加 detekt gradle 文件
 
 ```groovy
 apply from: "./config/detekt.gradle”
@@ -138,6 +134,12 @@ fi
 #./gradlew checkstyle
 ```
 
+如果 git 版本 > 2.9，在项目更目录下执行
+
+```shell
+git config core.hooksPath ./config
+```
+
 
 
 ## 执行
@@ -158,7 +160,7 @@ fi
 
 方式1：
 
-对于上图的 ComplexCondition 错误，如果想要排除掉可以使用@Suppress 注解 [详情请参见说明](https://detekt.github.io/detekt/suppressing-rules.html)
+对于上图的 ComplexCondition 错误，如果想要排除掉可以使用@Suppress 注解,并注明要排除的规则，如果有多个规则用逗号分割。 [详情请参见说明](https://detekt.github.io/detekt/suppressing-rules.html)
 
 
 
@@ -174,7 +176,7 @@ fi
 
 ## detekt.yml
 
-detekt.yml 是检测的规则集合，可以通过修改此配置文件直接指定是否启用规则、规则参数等信息。
+detekt.yml 是检测的规则集合，可以通过修改此配置文件指定规则是否启用、参数等信息。
 
 位于 config/detekt/detekt.yml 的配置文件已经设置了常用规则，直接使用就可以。每个规则的具体说明请参见：[规则说明](https://detekt.github.io/detekt/comments.html)
 
@@ -184,7 +186,7 @@ detekt.yml 是检测的规则集合，可以通过修改此配置文件直接指
 
 ## detekt.gradle
 
-detekt 的 gradle 设置
+对 detakt 的 Gradle 配置进行了抽取，详情请见 config/detekt/detekt.gradle
 
 ```groovy
 detekt {
