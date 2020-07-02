@@ -1,11 +1,9 @@
-# 安卓多语言文案转换器
-
-![icon-convert-6](images/README/icon-convert-6.png)
-
-## Future
+# <img width="85" height="80" src="images/README/icon-convert-6.png"/>安卓多语言文案转换器
 
 1. 一键转换多语言文案，支持添加、修改功能。无需手动复制、整理格式。
 2. 不更改历史文案的结构（礼物注释，文案顺序），仅移除末尾空格、将使用“\” 转译的特殊符号更改为 html 标签。
+
+
 
 ## 使用说明
 
@@ -64,7 +62,6 @@ Exception in thread "main" jxl.read.biff.BiffException: Unable to recognize OLE 
 	at com.mrcd.Converter.convert(Converter.kt:33)
 	at com.mrcd.MainKt$Companion.main(MainKt.kt:14)
 	at com.mrcd.MainKt.main(MainKt.kt)
-
 ```
 
 对于高版本的支持是有解决方案的：使用[appche poi 项目的 XSSFWorkbook](https://poi.apache.org/apidocs/dev/org/apache/poi/xssf/usermodel/XSSFWorkbook.html) POI 功能强大，但是会使打出来的 java 很大(未优化前19M左右)，最终 jar 包都会跟随版本控制托管起来，这么大的包就一个简单的工作，得不偿失。
