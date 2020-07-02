@@ -1,6 +1,6 @@
 # 安卓多语言文案转换器
 
-<img src="images/README/icon-convert-6.jpg" alt="icon-convert-6" style="zoom:33%;" />
+![icon-convert-6](images/README/icon-convert-6.png)
 
 ## Future
 
