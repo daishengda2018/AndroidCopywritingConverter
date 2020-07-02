@@ -26,7 +26,7 @@ internal class Converter(private val excelPath: String, private val outPutPath: 
             throw NoSuchFileException(file = excelFile, reason = "excel 文件不存在，请检查参数")
         }
 
-        println("------- 开始转换 ------\n")
+        println("============= start convert =============\n")
 
         for (index in 0 until SHEET_COUNT) {
             // 转换 sheet， 转换个数可配置。
@@ -36,7 +36,7 @@ internal class Converter(private val excelPath: String, private val outPutPath: 
             }
         }
 
-        println("\n-------转换完成 ------")
+        println("\n============= convert complete =============")
     }
 
     private fun convertColumn(sheet: Sheet, column: Int){
