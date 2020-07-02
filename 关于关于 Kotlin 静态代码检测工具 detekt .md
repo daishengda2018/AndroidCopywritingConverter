@@ -148,6 +148,26 @@ fi
 
 
 
+错误提示
+
+![image-20200702183943746](images/关于关于 Kotlin 静态代码检测工具 detekt /image-20200702183943746.png)
+
+
+
+# 排除
+
+方式1：
+
+对于上图的 ComplexCondition 错误，如果想要排除掉可以使用@Suppress 注解 [详情请参见说明](https://detekt.github.io/detekt/suppressing-rules.html)
+
+
+
+![image-20200702184320604](images/关于关于 Kotlin 静态代码检测工具 detekt /image-20200702184320604.png)
+
+
+
+方式2：[配置 baseLine](https://detekt.github.io/detekt/baseline.html)
+
 
 
 # 配置文件说明

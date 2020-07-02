@@ -1,10 +1,9 @@
 package com.mrcd
 
 /**
- *
  * Create by im_dsd 2020/7/1 11:18
  */
-class MainKt {
+class MainKt private constructor() {
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {

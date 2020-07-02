@@ -3,8 +3,6 @@ package com.mrcd
 import jxl.Sheet
 import jxl.Workbook
 import org.apache.commons.text.StringEscapeUtils
-import org.apache.commons.lang3.AnnotationUtils
-
 import org.dom4j.*
 import org.dom4j.io.OutputFormat
 import org.dom4j.io.SAXReader
@@ -12,7 +10,6 @@ import org.dom4j.io.XMLWriter
 import org.dom4j.tree.DefaultElement
 import org.xml.sax.SAXParseException
 import java.io.File
-import java.io.Closeable
 import java.io.FileWriter
 
 /**
@@ -42,7 +39,7 @@ internal class Converter(private val excelPath: String, private val outPutPath: 
         println("\n============= convert complete =============")
     }
 
-    private fun convertColumn(sheet: Sheet, column: Int){
+    private fun convertColumn(sheet: Sheet, column: Int) {
         val langCode = sheet.getCell(column, 0).contents
         if (langCode.isEmpty()) {
             return
@@ -114,6 +111,7 @@ internal class Converter(private val excelPath: String, private val outPutPath: 
         return DocumentHelper.createDocument()
     }
 
+    @Suppress("ComplexCondition")
     private fun parserExcel(sheet: Sheet, column: Int): LinkedHashMap<String, String> {
         val excelElementMap = LinkedHashMap<String, String>()
         for (row in FIRST_ROW until sheet.rows) {
@@ -193,7 +191,6 @@ internal class Converter(private val excelPath: String, private val outPutPath: 
         /**
          * sheet 数量
          */
-        private const val SHEET_COUNT = 1;
+        private const val SHEET_COUNT = 1
     }
 }
-
