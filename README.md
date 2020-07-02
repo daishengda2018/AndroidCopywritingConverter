@@ -8,6 +8,8 @@
 
 #### 使用方式：
 
+执行 relese 文件加下的 copy_write_conveter.jar
+
 ```shell
 java -jar copy_write_conveter.jar [excel文档路径] [输出的资源路径：eg.app/src/main/res]
 ```
