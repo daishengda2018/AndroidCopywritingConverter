@@ -19,3 +19,4 @@ hprof_analysis/
 .classpath
 .settings
 /.gradle/
+src/test/resources/values*

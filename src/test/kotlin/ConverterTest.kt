@@ -1,5 +1,6 @@
 import com.mrcd.MainKt
-import org.apache.commons.text.StringEscapeUtils
+import com.mrcd.Utils
+import org.junit.Assert
 import org.junit.Test
 import java.io.File
 
@@ -29,30 +30,49 @@ class ConverterTest {
     }
 
     @Test
+    fun testStringEscapeUtils() {
+        Assert.assertEquals(Utils.escapeContent("  "), "")
+        Assert.assertEquals(Utils.escapeContent(" A  "), " A")
+        Assert.assertEquals(Utils.escapeContent("'"), "\\'")
+        Assert.assertEquals(Utils.escapeContent("\'"), "\\'")
+        Assert.assertEquals(Utils.escapeContent("\\\""), "\\\"")
+        Assert.assertEquals(Utils.escapeContent("\""), "\"")
+        Assert.assertEquals(Utils.escapeContent("<"), "&lt;")
+        Assert.assertEquals(Utils.escapeContent(">"), "&gt;")
+        Assert.assertEquals(Utils.escapeContent("&"), "&amp;")
+
+        val originStr = "  单引号：' \' AT：@, \\@ 双引号： \"， < > & "
+        val destStr = "  单引号：\\' \\' AT：&#064;, &#064; 双引号： \"， &lt; &gt; &amp;"
+        Assert.assertEquals(Utils.escapeContent(originStr), destStr)
+    }
+
+    @Test
     fun testLocal() {
         val array = arrayOf("./src/test/resources/copy_writer.xls", "src/test/resources")
         MainKt.main(array)
+        val fileEn = File("src/test/resources/values/strings.xml")
+        Assert.assertTrue(fileEn.exists() && fileEn.isFile)
     }
 
     @Test
     fun absoluteTest() {
         val array = arrayOf(
             "./src/test/resources/copy_writer.xls",
-            "/Users/im_dsd/Documents/work_room/WeShare-Android/chatroom/src/main/res"
+            "/Users/im_dsd/Documents/work_room/CopywritingConverter/src/test/resources"
         )
         MainKt.main(array)
+        val fileEn = File("src/test/resources/values/strings.xml")
+        Assert.assertTrue(fileEn.exists() && fileEn.isFile)
+        testContent()
     }
 
-    @Test
-    fun testStringEscapeUtils() {
-        val file = File("src/test/resources/text")
-        println(file.readLines()[0])
-        println(StringEscapeUtils.unescapeXml("@him/her"))
-        println(StringEscapeUtils.unescapeHtml4("&#064;"))
-
-        //handling xml special character & in Java String
-        val xmlWithSpecial = "Java & HTML @ < >"; //xml String with & as special characters
-        println("Original unescaped XML String: " + xmlWithSpecial);
-        println("Escaped XML String in Java: " + StringEscapeUtils.escapeXml11(xmlWithSpecial));
+    private fun testContent() {
+        val fileKeyList = arrayOf("en", "in", "ta", "ar", "te")
+        for (key in fileKeyList) {
+            val destEnFile = File("src/test/resources/dest/$key.xml")
+            val srcEnFile = File("src/test/resources/values${if (key == "en") "" else "-$key"}/strings.xml")
+            Assert.assertTrue(destEnFile.length() == srcEnFile.length())
+            Assert.assertEquals(destEnFile.readText(), destEnFile.readText())
+        }
     }
 }

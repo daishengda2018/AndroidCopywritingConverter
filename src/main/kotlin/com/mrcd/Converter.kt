@@ -2,7 +2,6 @@ package com.mrcd
 
 import jxl.Sheet
 import jxl.Workbook
-import org.apache.commons.text.StringEscapeUtils
 import org.dom4j.*
 import org.dom4j.io.OutputFormat
 import org.dom4j.io.SAXReader
@@ -66,7 +65,7 @@ internal class Converter(private val excelPath: String, private val outPutPath: 
                 xmlElementMap[key]?.text = excelElementMap[key]
                 excelElementMap.remove(key)
             }
-            xmlElementMap[key]?.text = escapeContent(xmlElementMap[key]?.text)
+            xmlElementMap[key]?.text = Utils.escapeContent(xmlElementMap[key]?.text)
         }
 
         // 添加新文案
@@ -74,32 +73,11 @@ internal class Converter(private val excelPath: String, private val outPutPath: 
         excelElementMap.forEach { (key, value) ->
             val newElement = DefaultElement(QName("string"))
             newElement.addAttribute("name", key)
-            newElement.text = escapeContent(value.trim())
+            newElement.text = Utils.escapeContent(value.trim())
             resultList.add(newElement)
         }
 
         return resultList
-    }
-
-    /**
-     * 转译特殊字符
-     */
-    private fun escapeContent(text: String?): String {
-        // 1. 先过去尾部空格, 开头的空格有的是估计留下，所有不能统一处理
-        var replace = text?.trimEnd() ?: ""
-        // 2. 替换单引号，防止 StringEscapeUtils 修改老的文案
-        replace = replace.replace("\\'", "'")
-        // 3. 替换 @，，防止 StringEscapeUtils 修改老的文案
-        replace = replace.replace("\\@", "@")
-        // 4. 转译
-        replace = StringEscapeUtils.escapeXml11(replace)
-        // 5. 替换单引号编码为反斜杠转译，因为 Android 不识别 &apos;
-        replace = replace.replace("&apos;", "\\'")
-        // 6. 替换被 StringEscapeUtils 转移的双引号，因为 Android 不识别
-        replace = replace.replace("&quot;", "\"")
-        // 7. StringEscapeUtils 不处理 @ 需手动处理
-        replace = replace.replace("@", "&#064;")
-        return replace
     }
 
     private fun readXmlFile(xmlFile: File): Document {
