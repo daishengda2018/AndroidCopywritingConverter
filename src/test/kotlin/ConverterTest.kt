@@ -63,9 +63,9 @@ class ConverterTest {
         MainKt.main(array)
         val fileEn = File("src/test/resources/values/strings.xml")
         Assert.assertTrue(fileEn.exists() && fileEn.isFile)
-        testContent()
     }
 
+    @Test
     private fun testContent() {
         val fileKeyList = arrayOf("en", "in", "ta", "ar", "te")
         for (key in fileKeyList) {
