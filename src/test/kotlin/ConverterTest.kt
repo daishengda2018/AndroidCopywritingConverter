@@ -66,13 +66,13 @@ class ConverterTest {
     }
 
     @Test
-    private fun testContent() {
+    fun testContent() {
         val fileKeyList = arrayOf("en", "in", "ta", "ar", "te")
         for (key in fileKeyList) {
             val destEnFile = File("src/test/resources/dest/$key.xml")
             val srcEnFile = File("src/test/resources/values${if (key == "en") "" else "-$key"}/strings.xml")
             Assert.assertTrue(destEnFile.length() == srcEnFile.length())
-            Assert.assertEquals(destEnFile.readText(), destEnFile.readText())
+            Assert.assertEquals(destEnFile.readText(), srcEnFile.readText())
         }
     }
 }
