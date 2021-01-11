@@ -42,7 +42,7 @@ java -jar copy_write_conveter.jar [excel文档路径] [输出的资源路径：e
 
 输出结果将会在 `relese` 文件夹下
 
-打包的时候使用了 proguard 对 jar 包进瘦身（3mb较少到1mb），但是没有开启 proguard 的优化和混淆功能，参见 proguard.pro 文件。
+打包的时候使用了 proguard 对 jar 包进瘦身（3mb减少到1mb），但是没有开启 proguard 的优化和混淆功能，参见 proguard.pro 文件。
 
 ## 特殊说明
 
